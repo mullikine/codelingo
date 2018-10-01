@@ -1,0 +1,31 @@
+tenets:
+  - name: usedexports_const
+    doc: |
+      Find exported variables (const, var, func, struct) in Go that could be unexported.
+    flows:
+      codelingo/review:
+        comment: Exported (public) const {{constname}} could be unexported (made private).
+    query: |
+      import codelingo/ast/go
+
+      go.file(depth = any):
+        filename as fname
+        go.decls:
+          go.gen_decl:
+            child_count == 1
+            tok == "const"
+            go.value_spec:
+              child_count == 3
+              go.names:
+                @ review.comment
+                go.ident:
+                  @ review.vars.constname
+                  name as constName
+                  public == "true"
+      
+      go.file(depth = any):
+        filename != fname
+        go.ident(depth = any):
+          child_count == 0
+          name == constName
+          public == "true"
