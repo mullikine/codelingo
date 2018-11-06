@@ -1,0 +1,3 @@
+Need a src lexicon to query line and column.
+
+Even by working with offsets, this seems impossible.

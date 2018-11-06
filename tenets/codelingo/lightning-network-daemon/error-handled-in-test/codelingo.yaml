@@ -1,0 +1,41 @@
+tenets:
+  - name: error-handled-in-test
+    flows:
+      codelingo/docs:
+        title: Error is handled in tests
+        body: |
+          docs string
+      codelingo/review:
+        comment: return type {{ returnValType }}. lhs name {{ lhsName }}. lhs type `{{ lhsType }}`. usage type `{{ usageType }}`. This error code is not handled within any "_test.go" that can be seen. Consider writing a test which handles this code.
+    query: |
+      import codelingo/ast/go
+
+      go.dir(depth = any):
+        go.file(depth = any):
+          go.decls:
+            go.func_decl:
+              @review comment
+              go.ident:
+                name as funcName
+              go.func_type:
+                go.field_list
+                go.field_list:
+                  go.field:
+                    go.ident:
+                      type as returnValType
+        go.file(depth = any): # test that this is a _test.go file
+          go.block_stmt(depth = any):
+            go.list:
+              go.assign_stmt:
+                go.lhs:
+                  go.ident:
+                    name as lhsName
+                    type as lhsType
+                go.rhs:
+                  go.call_expr:
+                    go.ident:
+                      name == funcName
+              go.if_stmt:
+                go.binary_expr:
+                  go.ident:
+                    name == lhsName

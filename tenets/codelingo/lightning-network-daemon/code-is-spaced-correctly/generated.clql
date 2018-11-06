@@ -1,0 +1,393 @@
+import codelingo/ast/go
+
+@playground highlight
+go.file(depth = any):
+  go.ident:
+    child_count == 0
+    name == "main"
+    private == "true"
+    public == "false"
+  go.decls:
+    go.gen_decl:
+      go.import_spec:
+        go.basic_lit:
+          child_count == 0
+          kind == "string"
+          value == "fmt"
+    go.func_decl:
+      go.ident:
+        child_count == 0
+        name == "wrong"
+        private == "true"
+        type == "*ast.FuncType"
+      go.func_type:
+        go.field_list:
+          child_count == 0
+      go.block_stmt:
+        go.list:
+          go.assign_stmt:
+            go.lhs:
+              go.ident:
+                child_count == 0
+                name == "witness"
+                private == "true"
+                public == "false"
+                type == "[][]byte"
+            go.rhs:
+              go.call_expr:
+                go.ident:
+                  child_count == 0
+                  name == "make"
+                  private == "true"
+                  public == "false"
+                go.args:
+                  go.array_type:
+                    go.array_type:
+                      go.ident:
+                        child_count == 0
+                        name == "byte"
+                        private == "true"
+                        public == "false"
+                  go.basic_lit:
+                    child_count == 0
+                    kind == "int"
+                    value == 4
+          go.assign_stmt:
+            go.lhs:
+              go.index_expr:
+                go.ident:
+                  child_count == 0
+                  name == "witness"
+                  private == "true"
+                  public == "false"
+                  type == "[][]byte"
+                go.basic_lit:
+                  child_count == 0
+                  kind == "int"
+                  value == 0
+            go.rhs:
+              go.ident:
+                child_count == 0
+                name == "nil"
+                private == "true"
+          go.if_stmt:
+            go.binary_expr:
+              go.call_expr:
+                go.selector_expr:
+                  go.ident:
+                    child_count == 0
+                    name == "bytes"
+                    private == "true"
+                    public == "false"
+                  go.ident:
+                    child_count == 0
+                    name == "Compare"
+                    private == "false"
+                go.args:
+                  go.ident:
+                    child_count == 0
+                    name == "pubA"
+                    private == "true"
+                    public == "false"
+                  go.ident:
+                    child_count == 0
+                    name == "pubB"
+                    private == "true"
+              go.unary_expr:
+                go.basic_lit:
+                  child_count == 0
+                  kind == "int"
+                  value == 1
+            go.block_stmt:
+              go.list:
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                        public == "false"
+                        type == "[][]byte"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 1
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigB"
+                      private == "true"
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                        type == "[][]byte"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 2
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigA"
+                      private == "true"
+                      public == "false"
+            go.block_stmt:
+              go.list:
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                        public == "false"
+                        type == "[][]byte"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 1
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigA"
+                      private == "true"
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                        type == "[][]byte"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 2
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigB"
+                      private == "true"
+                      public == "false"
+          go.assign_stmt:
+            go.lhs:
+              go.index_expr:
+                go.ident:
+                  child_count == 0
+                  name == "witness"
+                  private == "true"
+                  public == "false"
+                  type == "[][]byte"
+                go.basic_lit:
+                  child_count == 0
+                  kind == "int"
+                  value == 3
+            go.rhs:
+              go.ident:
+                child_count == 0
+                name == "witnessScript"
+                private == "true"
+          go.assign_stmt:
+            go.lhs:
+              go.ident:
+                child_count == 0
+                name == "witness"
+                private == "true"
+                public == "false"
+                type == "[][]byte"
+            go.rhs:
+              go.call_expr:
+                go.ident:
+                  child_count == 0
+                  name == "make"
+                  private == "true"
+                  public == "false"
+                go.args:
+                  go.array_type:
+                    go.array_type:
+                      go.ident:
+                        child_count == 0
+                        name == "byte"
+                        private == "true"
+                        public == "false"
+                  go.basic_lit:
+                    child_count == 0
+                    kind == "int"
+                    value == 4
+    go.func_decl:
+      go.ident:
+        child_count == 0
+        name == "right"
+        private == "true"
+        public == "false"
+        type == "*ast.FuncType"
+      go.func_type:
+        go.field_list:
+          child_count == 0
+      go.block_stmt:
+        go.list:
+          go.assign_stmt:
+            go.lhs:
+              go.index_expr:
+                go.ident:
+                  child_count == 0
+                  name == "witness"
+                  private == "true"
+                  public == "false"
+                go.basic_lit:
+                  child_count == 0
+                  kind == "int"
+                  value == 0
+            go.rhs:
+              go.ident:
+                child_count == 0
+                name == "nil"
+                private == "true"
+                public == "false"
+          go.if_stmt:
+            go.binary_expr:
+              go.call_expr:
+                go.selector_expr:
+                  go.ident:
+                    child_count == 0
+                    name == "bytes"
+                    private == "true"
+                  go.ident:
+                    child_count == 0
+                    name == "Compare"
+                    private == "false"
+                go.args:
+                  go.ident:
+                    child_count == 0
+                    name == "pubA"
+                    private == "true"
+                  go.ident:
+                    child_count == 0
+                    name == "pubB"
+                    private == "true"
+                    public == "false"
+              go.unary_expr:
+                go.basic_lit:
+                  child_count == 0
+                  kind == "int"
+                  value == 1
+            go.block_stmt:
+              go.list:
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 1
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigB"
+                      private == "true"
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 2
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigA"
+                      private == "true"
+            go.block_stmt:
+              go.list:
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 1
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigA"
+                      private == "true"
+                go.assign_stmt:
+                  go.lhs:
+                    go.index_expr:
+                      go.ident:
+                        child_count == 0
+                        name == "witness"
+                        private == "true"
+                      go.basic_lit:
+                        child_count == 0
+                        kind == "int"
+                        value == 2
+                  go.rhs:
+                    go.ident:
+                      child_count == 0
+                      name == "sigB"
+                      private == "true"
+          go.assign_stmt:
+            go.lhs:
+              go.index_expr:
+                go.ident:
+                  child_count == 0
+                  name == "witness"
+                  private == "true"
+                go.basic_lit:
+                  child_count == 0
+                  kind == "int"
+                  value == 3
+            go.rhs:
+              go.ident:
+                child_count == 0
+                name == "witnessScript"
+                private == "true"
+  go.comment_group:
+    go.comment:
+      child_count == 0
+      slash == 406
+      text == "// When spending a p2wsh multi-sig script, rather than an OP_0, we add"
+    go.comment:
+      child_count == 0
+      slash == 478
+      text == "// a nil stack element to eat the extra pop."
+  go.comment_group:
+    go.comment:
+      child_count == 0
+      slash == 543
+      text == "// When initially generating the witnessScript, we sorted the serialized"
+    go.comment:
+      child_count == 0
+      slash == 617
+      text == "// public keys in descending order. So we do a quick comparison in order"
+    go.comment:
+      child_count == 0
+      slash == 691
+      text == "// to ensure the signatures appear on the Script Virtual Machine stack in"
+    go.comment:
+      child_count == 0
+      slash == 766
+      text == "// the correct order."
+  go.comment_group:
+    go.comment:
+      child_count == 0
+      slash == 921
+      text == "// Finally, add the preimage as the last witness element."
