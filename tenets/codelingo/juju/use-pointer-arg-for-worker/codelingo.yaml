@@ -1,0 +1,49 @@
+funcs:
+  - name: isNamedLikeAWorkerConstructor
+    type: asserter
+    body: |
+      function(text) {
+        var re = new RegExp("New[A-Za-z]\+Worker")
+        return re.test(text)
+      }
+tenets:
+  - name: use-pointer-arg-for-worker
+    flows:
+      codelingo/rewrite:
+      codelingo/docs:
+        title: Use Pointer Arg for Worker
+        body: |
+          That is to say:
+          
+              func NewThingWorker() (*ThingWorker, error)
+          
+          ...is much better than:
+          
+              func NewThingWorker() (worker.Worker, error)
+                                                    /home/shane/dump/home/shane/notes2018/ws/codelingo/issues/juju/write-tenets
+          ...*even if* `ThingWorker` only exposes `Worker` methods. This is because
+          interfaces are designed to hide behaviour, but we don't want to hide
+          behaviour from our creator -- *she* needs to know everything we can do,
+          and she's responsible for packaging up those capabilities neatly and
+          delivering them where they're needed.
+      codelingo/review:
+        comment: worker.Worker should be rewritten here to use a typed pointer (i.e. *GoodWorker)
+    query: |
+      import codelingo/ast/go
+      
+      go.func_decl(depth = any):
+        go.ident:
+          child_count == 0
+          name as funcName
+          isNamedLikeAWorkerConstructor(funcName)
+          type == "*ast.FuncType"
+        go.func_type:
+          go.field_list:
+            sibling_order == 1
+            go.field:
+              go.selector_expr:
+                @review comment
+                go.ident:
+                  name == "worker"
+                go.ident:
+                  name == "Worker"

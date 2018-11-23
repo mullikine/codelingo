@@ -1,0 +1,85 @@
+tenets:
+  - name: interface-too-many-methods
+    flows:
+      codelingo/rewrite:
+      codelingo/docs:
+        title: Interface Too Many Methods
+        body: |
+          One method is a great size for an interface; 3 or 4 is probably
+          perfectly decent; more than that and you're probably creating an
+          interface to cover up for some bloated concrete type that you're
+          replacing so you can test the recipient.
+          
+          And that's tolerable -- it's certainly progress -- but it's also quite
+          possibly a missed opportunity. Imagine a config struct that currently
+          references some horrible gnarly type:
+          
+              type Config struct {
+                  State *state.State
+                  Magic string
+              }
+          
+          ...and an implementation that uses a bunch of methods, such that you
+          extract the following interface to give (note: not real State methods,
+          methods returning concrete types with unexported fields are a goddamn
+          nightmare for testing and refactoring, this is heavily idealized for
+          convenience):
+          
+              type Backend interface {
+                  ListUnits() ([]string, error)
+                  GetUnits([]string) ([]Unit, error)
+                  DestroyUnits([]string) error
+                  ListMachines() ([]string, error)
+                  GetMachines([]string) ([]Machine, error)
+                  DestroyMachines([]string) error
+              }
+          
+              type Config struct {
+                  Backend Backend
+                  Magic   string
+              }
+          
+          This is great, because you can now test your implementation thoroughly
+          by means of a mock implementing the Backend interface, but it's actually
+          still pretty unwieldy.
+          
+          If we go a step further, though, according to the capabilities that are
+          most intimately connected:
+          
+              type UnitBackend interface {
+                  ListUnits() ([]string, error)
+                  GetUnits([]string) ([]Unit, error)
+                  DestroyUnits([]string) error
+              }
+          
+              type MachineBackend interface {
+                  ListMachines() ([]string, error)
+                  GetMachines([]string) ([]Machine, error)
+                  DestroyMachines([]string) error
+              }
+          
+              type Config struct {
+                  Units    UnitBackend
+                  Machines MachineBackend
+                  Magic    string
+              }
+          
+          ...the scope of the type's responsibilities is immediately clearer: the
+          capabilities exposed to it are immediately clearer; and it's also easier
+          to build more modular test scaffolding around particular areas.
+      codelingo/review:
+        comment: This interface contains more than 4 methods, which makes its responsibilities unclear. Reduce the number of methods or divide it up into several smaller interfaces.
+    query: |
+      import codelingo/ast/go
+      
+      go.file(depth = any):
+        go.decls:
+          go.gen_decl:
+            go.type_spec:
+              @review comment
+              go.ident
+              go.interface_type:
+                go.field_list:
+                  go.field:
+                    sibling_order == 4
+                    go.func_type

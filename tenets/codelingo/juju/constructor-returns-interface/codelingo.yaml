@@ -1,0 +1,23 @@
+tenets:
+  - name: constructor-returns-interface
+    flows:
+      codelingo/rewrite:
+      codelingo/docs:
+        title: Constructor Returns Interface
+        body: |
+          If you see a constructor that returns an interface instead of a concrete
+          type, it's almost certainly wrong.
+      codelingo/review:
+        comment: This constructor returns an interface instead of a concrete type. This is probably not what you want to do.
+    query: |
+      import codelingo/ast/go
+      
+      go.file(depth = any):
+        go.decls:
+          go.gen_decl:
+            go.type_spec:
+              go.interface_type
+          go.func_decl:
+            @review comment
+            go.ident
+            go.func_type
