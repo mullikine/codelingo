@@ -1,25 +1,26 @@
 <?php
 
-function takes_bool(bool $input) // ISSUE
-{
-    if ($input) {
-        echo "true";
-    } else {
-        echo "false";
+$bool = false;
+$bool = FALSE;
+
+public function run(){
+    $bool = true;
+    $bool = TRUE;
+    if ($bool) {
+        $hi = 'Hello to all people!';
+    }
+    echo $hi;
+
+    while(TRUE){
+        echo $this->i;
+        sleep(1);
     }
 }
 
-function does_not_take_bool(int $input)
-{
-    if ($input == 10) {
-        echo "true";
-    } else {
-        echo "false";
-    }
-}
+$a==NULL;
+is_null(NULL);
+$a=null;
+isset($a);
+$a==NULL;
 
-takes_bool(true);
-takes_bool(false);
-
-does_not_take_bool(10);
 ?>

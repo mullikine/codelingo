@@ -3,12 +3,19 @@ funcs:
     type: asserter
     body: |
       function (s) {
+        function lc(s) {
+          return s.toLowerCase();
+        }
+
         function isLCase(s) {
-          return s === s.toLowerCase()
+          return s === lc(s)
         }
+        
         function isSpecial(s) {
-          return s !== s.toLowerCase()
+          var specials = ["true, "false, "null];
+          return (specials.indexOf(lc(s)) > -1);
         }
+        
         return isSpecial(s) && ! isLCase(s)
       }
   - name: lc
@@ -19,8 +26,6 @@ funcs:
       }
 tenets:
   - name: lcase-keywords
-    vars:
-      pName: "{{ protoName(literalValue) }}"
     flows:
       codelingo/rewrite:
       codelingo/docs:
