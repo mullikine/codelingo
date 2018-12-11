@@ -1,0 +1,48 @@
+funcs:
+  - name: isSpecialButNotLCase
+    type: asserter
+    body: |
+      function (s) {
+        function lc(s) {
+          return s.toLowerCase();
+        }
+
+        function isLCase(s) {
+          return s === lc(s)
+        }
+        
+        function isSpecial(s) {
+          var specials = ["true, "false, "null];
+          return (specials.indexOf(lc(s)) > -1);
+        }
+        
+        return isSpecial(s) && ! isLCase(s)
+      }
+  - name: lc
+    type: resolver
+    body: |
+      function (s) {
+        return s.toLowerCase()
+      }
+tenets:
+  - name: lcase-keywords
+    flows:
+      codelingo/rewrite:
+      codelingo/docs:
+        title: Lower-case Keywords and Constants
+        body: |
+          PHP keywords MUST be in lower case.
+          
+          The PHP constants true, false, and null MUST be in lower case.
+      codelingo/review:
+        comment: \`{{identName}}` is a {{keywordOrConstant}} so it should be lowercase.
+    query: |
+      import codelingo/ast/php
+
+      php.stmt_function(depth = any):
+        @review comment
+        @rewrite --replace "{{lc(identName)}}"
+        php.param:
+          type == "bool"
+          name as identName
+          isSpecialButNotLCase(identName)

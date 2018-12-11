@@ -1,0 +1,6 @@
+description: Best Practices for PHP from PSR 1 Coding Style Guide
+version: 0.0.0
+tenets:
+  - uppercase-class-constants
+tags:
+  - php
