@@ -1,48 +1,46 @@
 funcs:
-  - name: isSpecialButNotLCase
+  - name: isNotUCase
     type: asserter
     body: |
       function (s) {
-        function lc(s) {
-          return s.toLowerCase();
+        function uc(s) {
+          return s.toUpperCase();
         }
 
-        function isLCase(s) {
-          return s === lc(s)
-        }
-        
-        function isSpecial(s) {
-          var specials = ["true, "false, "null];
-          return (specials.indexOf(lc(s)) > -1);
-        }
-        
-        return isSpecial(s) && ! isLCase(s)
+        return s !== uc(s)
       }
-  - name: lc
+  - name: uc
     type: resolver
     body: |
       function (s) {
-        return s.toLowerCase()
+        return s.toUpperCase()
       }
 tenets:
-  - name: lcase-keywords
+  - name: uppercase-class-constants
     flows:
       codelingo/rewrite:
       codelingo/docs:
-        title: Lower-case Keywords and Constants
+        title: Uppercase Class Constants
         body: |
-          PHP keywords MUST be in lower case.
-          
-          The PHP constants true, false, and null MUST be in lower case.
+          PHP class constants MUST be in uppercase.
       codelingo/review:
-        comment: \`{{identName}}` is a {{keywordOrConstant}} so it should be lowercase.
+        comment: \`{{identName}}` is a class constant so it should be uppercase.
     query: |
       import codelingo/ast/php
 
-      php.stmt_function(depth = any):
+      php.stmt_classconst(depth = any):
+        php.const:
+          @review comment
+          @rewrite --replace "{{uc(identName)}}"
+          php.identifier:
+            child_count == "0"
+            name as identName
+            isNotUCase(identName)
+
+      php.expr_classconstfetch(depth = any):
         @review comment
-        @rewrite --replace "{{lc(identName)}}"
-        php.param:
-          type == "bool"
+        @rewrite --replace "{{uc(identName)}}"
+        php.identifier:
+          child_count == "0"
           name as identName
-          isSpecialButNotLCase(identName)
+          isNotUCase(identName)

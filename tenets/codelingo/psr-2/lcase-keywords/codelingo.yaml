@@ -29,11 +29,11 @@ tenets:
     flows:
       codelingo/rewrite:
       codelingo/docs:
-        title: Lower-case Keywords and Constants
+        title: Lowercase Keywords and Constants
         body: |
-          PHP keywords MUST be in lower case.
+          PHP keywords MUST be in lowercase.
           
-          The PHP constants true, false, and null MUST be in lower case.
+          The PHP constants true, false, and null MUST be in lowercase.
       codelingo/review:
         comment: \`{{identName}}` is a {{keywordOrConstant}} so it should be lowercase.
     query: |
