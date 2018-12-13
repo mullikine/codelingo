@@ -28,19 +28,17 @@ tenets:
     query: |
       import codelingo/ast/php
 
-      php.stmt_classconst(depth = any):
-        php.const:
+      path(repeat = 1):
+        any_of:
+          php.stmt_classconst(depth = any):
+            php.const:
+              pathcontinue
+          php.expr_classconstfetch(depth = any):
+            pathcontinue
+        pathend:
           @review comment
           @rewrite --replace "{{uc(identName)}}"
           php.identifier:
             child_count == "0"
             name as identName
             isNotUCase(identName)
-
-      php.expr_classconstfetch(depth = any):
-        @review comment
-        @rewrite --replace "{{uc(identName)}}"
-        php.identifier:
-          child_count == "0"
-          name as identName
-          isNotUCase(identName)
